@@ -1,0 +1,164 @@
+/* ============ Actividad 3 · Bancolombia · estilo Netflix ============ */
+:root{
+  --p:#5B2A86; --o:#F28C1E; --pl:#7A4FB5; --teal:#2BB3A3; --mag:#E0457B; --gold:#C98A1B;
+  --ink:#141018; --ink2:#1A1433; --lila:#F4F1FA; --grey:#6B6480; --white:#fff;
+  --head:'Montserrat',system-ui,sans-serif; --body:'Inter',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--body);background:#000;color:#fff;overflow:hidden}
+
+/* ---------- diapositiva base ---------- */
+.slide{
+  position:fixed;inset:0;display:none;flex-direction:column;justify-content:center;
+  padding:6vh 7vw;opacity:0;transform:scale(1.04);
+  transition:opacity .55s ease, transform .55s ease;overflow:hidden;
+}
+.slide.is-active{display:flex;opacity:1;transform:scale(1);z-index:2}
+.slide.is-leaving{display:flex;opacity:0;transform:scale(.97);z-index:1}
+.slide--dark{background:radial-gradient(1200px 700px at 80% -10%,#2A1F55 0,var(--ink2) 55%,var(--ink) 100%);color:#fff}
+.slide--light{background:#fff;color:var(--ink)}
+
+/* ---------- tipografía comun ---------- */
+.kicker{font-family:var(--body);font-weight:600;letter-spacing:.18em;font-size:.8rem;
+  text-transform:uppercase;color:var(--o);margin-bottom:.6rem}
+.kicker--purple{color:var(--p)} .kicker--orange{color:var(--o)}
+.kicker--teal{color:var(--teal)}
+.title{font-family:var(--head);font-weight:900;font-size:clamp(1.8rem,4vw,3rem);line-height:1.05;color:#fff;margin-bottom:1.4rem}
+.title--dark{color:var(--ink)}
+.lead{max-width:60ch;color:var(--grey);font-size:1rem;margin-bottom:1.6rem}
+.lead--light{color:#CFC6E8;max-width:70ch}
+
+/* ---------- PORTADA ---------- */
+.hero{max-width:60rem}
+.tag{display:inline-block;background:var(--o);color:#111;font-weight:800;font-size:.72rem;
+  letter-spacing:.14em;padding:.5rem 1rem;border-radius:2rem;margin-bottom:1.6rem}
+.hero__title{font-family:var(--head);font-weight:900;font-size:clamp(2rem,5.2vw,4rem);
+  line-height:1.03;max-width:20ch;margin-bottom:1.2rem}
+.hero__sub{font-size:clamp(1rem,2vw,1.3rem);color:#CFC6E8;margin-bottom:1.5rem}
+.hero__line{width:120px;height:3px;background:var(--o);margin-bottom:1.5rem;border-radius:2px}
+.hero__author{color:#CFC6E8;line-height:1.7;font-size:.95rem}
+.hero__author .name{color:#fff;font-weight:700;font-size:1.05rem}
+.btn-start{margin-top:2rem;background:var(--o);color:#111;border:none;cursor:pointer;
+  font-family:var(--head);font-weight:800;font-size:1rem;padding:.9rem 2rem;border-radius:.6rem;
+  transition:transform .2s, box-shadow .2s;box-shadow:0 10px 30px rgba(242,140,30,.35)}
+.btn-start span{transition:margin .2s}
+.btn-start:hover{transform:translateY(-3px)}
+.btn-start:hover span{margin-left:.4rem}
+
+/* ---------- CATÁLOGO / MENÚ ---------- */
+.catalog{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:1rem}
+.cat{position:relative;text-align:left;cursor:pointer;border:none;border-radius:1rem;
+  background:linear-gradient(160deg,#241A49,#1c1538);color:#fff;padding:1.6rem 1.3rem;min-height:12.5rem;
+  display:flex;flex-direction:column;gap:.5rem;overflow:hidden;transition:transform .3s, box-shadow .3s;
+  border:1px solid rgba(255,255,255,.06)}
+.cat::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--c)}
+.cat__num{font-family:var(--head);font-weight:900;font-size:2.6rem;color:var(--c);line-height:1}
+.cat__name{font-weight:700;font-size:1.1rem;margin-top:auto}
+.cat__desc{font-size:.82rem;color:#b7b0cf}
+.cat:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 22px 40px rgba(0,0,0,.5);z-index:3}
+
+/* ---------- DOS COLUMNAS ---------- */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.panel{border-radius:1rem;padding:1.8rem;transition:transform .3s, box-shadow .3s}
+.panel:hover{transform:translateY(-5px);box-shadow:0 18px 36px rgba(91,42,134,.18)}
+.panel--purple{background:var(--p);color:#fff}
+.panel--purple h3{font-family:var(--head);font-size:1.5rem;margin-bottom:1rem}
+.panel--purple p{color:#EDE7F8;margin-bottom:.9rem;line-height:1.55}
+.panel--light{background:var(--lila)}
+.mini{color:var(--o);font-weight:700;font-size:.85rem}
+.panel--light h3.dark{font-family:var(--head);color:var(--ink);font-size:1.5rem;margin:.3rem 0 1rem}
+.ticks{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+.ticks li{position:relative;padding-left:1.6rem;color:var(--ink);line-height:1.4}
+.ticks li::before{content:"";position:absolute;left:0;top:.45em;width:.7rem;height:.7rem;border-radius:50%;background:var(--o)}
+
+/* ---------- DIVISORIAS ---------- */
+.divider{max-width:60rem}
+.divider__num{display:inline-block;background:var(--o);color:#111;font-family:var(--head);font-weight:900;
+  font-size:1.1rem;padding:.3rem 1rem;border-radius:2rem;margin-bottom:1.2rem}
+.divider h2{font-family:var(--head);font-weight:900;font-size:clamp(2rem,5vw,3.4rem);margin-bottom:.8rem}
+.divider p{color:#CFC6E8;font-size:1.15rem}
+
+/* ---------- GRID 6 (ciclo) ---------- */
+.grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.step{background:var(--lila);border-radius:.9rem;padding:1.1rem 1.1rem 1.1rem 4rem;position:relative;
+  min-height:5.2rem;display:flex;flex-direction:column;justify-content:center;transition:transform .25s, box-shadow .25s}
+.step span{position:absolute;left:1rem;top:50%;transform:translateY(-50%);width:2.4rem;height:2.4rem;border-radius:50%;
+  background:var(--c);color:#fff;font-family:var(--head);font-weight:900;display:grid;place-items:center;font-size:1.2rem}
+.step b{color:var(--ink);font-size:1.05rem}
+.step em{color:var(--grey);font-style:normal;font-size:.82rem;margin-top:.2rem}
+.step:hover{transform:translateY(-5px);box-shadow:0 14px 28px rgba(0,0,0,.12)}
+
+/* ---------- PALANCAS ---------- */
+.levers{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.levers .lever:nth-child(4),.levers .lever:nth-child(5){grid-column:span 1}
+.lever{text-align:left;cursor:pointer;border:none;background:var(--lila);border-radius:.9rem;padding:1.3rem 1.3rem 1.3rem 1.6rem;
+  position:relative;overflow:hidden;transition:transform .25s, box-shadow .25s;min-height:6rem}
+.lever::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--c)}
+.lever b{display:block;color:var(--ink);font-size:1.05rem;margin-bottom:.3rem}
+.lever em{font-style:normal;color:var(--grey);font-size:.85rem}
+.lever:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 18px 34px rgba(0,0,0,.15)}
+
+/* ---------- DETALLE ---------- */
+.detail{display:grid;grid-template-columns:.9fr 1.3fr;gap:1.5rem}
+.detail__idea{background:var(--c);color:#fff;border-radius:1rem;padding:1.8rem}
+.detail__idea h3{font-family:var(--head);font-size:1.4rem;margin-bottom:.9rem;line-height:1.15}
+.detail__idea p{color:rgba(255,255,255,.92);line-height:1.6}
+.detail__acts{display:flex;flex-direction:column;gap:.7rem}
+.act{background:var(--lila);border-radius:.7rem;padding:1rem 1.2rem;color:#4A4460;line-height:1.45;
+  position:relative;padding-left:1.6rem;transition:transform .2s}
+.act::before{content:"";position:absolute;left:.7rem;top:1.25rem;width:.55rem;height:.55rem;border-radius:50%;background:var(--c)}
+.act b{color:var(--ink)}
+.act:hover{transform:translateX(6px)}
+
+/* ---------- EVALUACIÓN 3 COLUMNAS ---------- */
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.colcard{background:var(--lila);border-radius:1rem;overflow:hidden;transition:transform .25s, box-shadow .25s}
+.colcard:hover{transform:translateY(-6px);box-shadow:0 18px 34px rgba(0,0,0,.14)}
+.colcard header{background:var(--c);color:#fff;font-family:var(--head);font-weight:700;padding:1rem 1.3rem;font-size:1.05rem}
+.colcard ul{list-style:none;padding:1.2rem 1.3rem;display:flex;flex-direction:column;gap:.85rem}
+.colcard li{position:relative;padding-left:1.4rem;color:var(--ink);line-height:1.4}
+.colcard li::before{content:"";position:absolute;left:0;top:.5em;width:.55rem;height:.55rem;border-radius:50%;background:var(--c)}
+
+/* ---------- CIERRE ---------- */
+.take{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+.take__c{background:#241A49;border-radius:1rem;padding:1.6rem;border-top:4px solid var(--c);transition:transform .25s}
+.take__c b{display:block;font-family:var(--head);font-size:1.25rem;margin-bottom:.5rem;color:#fff}
+.take__c em{font-style:normal;color:#CFC6E8;font-size:.9rem}
+.take__c:hover{transform:translateY(-6px)}
+
+/* ---------- REFERENCIAS ---------- */
+.refs{list-style:none;max-width:80ch;display:flex;flex-direction:column;gap:1rem;margin-top:.5rem}
+.refs li{position:relative;padding-left:1.5rem;color:var(--ink);line-height:1.5;font-size:.95rem}
+.refs li::before{content:"";position:absolute;left:0;top:.5em;width:.5rem;height:.5rem;border-radius:50%;background:var(--p)}
+.foot{margin-top:2rem;color:var(--grey);font-size:.82rem;font-style:italic}
+
+/* ---------- HUD ---------- */
+.progress-bar{position:fixed;top:0;left:0;right:0;height:4px;background:rgba(255,255,255,.12);z-index:50}
+.progress-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--o),var(--mag));transition:width .4s}
+.counter{position:fixed;top:14px;right:18px;z-index:50;font-size:.85rem;color:#fff;background:rgba(0,0,0,.35);
+  padding:.25rem .7rem;border-radius:1rem;backdrop-filter:blur(6px)}
+.brand{position:fixed;top:14px;left:18px;z-index:50;font-size:.85rem;font-weight:600;color:#fff;
+  background:rgba(0,0,0,.35);padding:.25rem .7rem;border-radius:1rem;backdrop-filter:blur(6px)}
+.slide--light ~ .counter,.slide--light ~ .brand{}
+.nav{position:fixed;top:50%;transform:translateY(-50%);z-index:50;width:3rem;height:3rem;border:none;cursor:pointer;
+  border-radius:50%;background:rgba(0,0,0,.4);color:#fff;font-size:1.8rem;line-height:1;display:grid;place-items:center;
+  backdrop-filter:blur(6px);transition:background .2s, transform .2s}
+.nav:hover{background:var(--o);color:#111;transform:translateY(-50%) scale(1.08)}
+.nav--prev{left:16px} .nav--next{right:16px}
+.home{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:50;border:none;cursor:pointer;
+  background:rgba(0,0,0,.45);color:#fff;padding:.5rem 1.2rem;border-radius:2rem;font-size:.85rem;font-weight:600;
+  backdrop-filter:blur(6px);transition:background .2s}
+.home:hover{background:var(--p)}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:900px){
+  .catalog,.grid6,.levers,.cols3,.take{grid-template-columns:1fr 1fr}
+  .two-col,.detail{grid-template-columns:1fr}
+  .slide{padding:8vh 6vw}
+}
+@media(max-width:560px){
+  .catalog,.grid6,.levers,.cols3,.take{grid-template-columns:1fr}
+  .nav{width:2.4rem;height:2.4rem;font-size:1.4rem}
+  .counter,.brand{font-size:.75rem}
+}

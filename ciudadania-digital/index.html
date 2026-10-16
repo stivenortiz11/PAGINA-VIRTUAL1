@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apropiación Digital | Stiven Ortiz Calderon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-purple: #9d4edd;
+            --dark-bg: #0b0c10;
+            --glass-bg: rgba(20, 25, 35, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.15);
+            --text-main: #e0e2e5;
+            --text-muted: #a0a5b1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--neon-blue), var(--neon-purple));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--neon-purple), var(--neon-blue));
+        }
+
+        body {
+            background: linear-gradient(-45deg, #0b0c10, #1f2833, #11001c, #0a192f);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 10s infinite alternate-in-out;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 450px;
+            height: 450px;
+            background: var(--neon-purple);
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -5%;
+            width: 550px;
+            height: 550px;
+            background: var(--neon-blue);
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) scale(1) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(60px) scale(1.1) rotate(15deg);
+            }
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(11, 12, 16, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glass-border);
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            overflow-y: auto;
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-container {
+            padding: 45px 20px 30px;
+            text-align: center;
+        }
+
+        .logo-container i {
+            font-size: 3.8rem;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.3));
+        }
+
+        .logo-container h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0 15px 30px 15px;
+        }
+
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar nav a i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .sidebar nav a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar nav a.active {
+            color: #fff;
+            background: rgba(157, 78, 221, 0.15);
+            border-left: 4px solid var(--neon-blue);
+            box-shadow: inset 2px 0 10px rgba(0, 243, 255, 0.1);
+        }
+
+        .sidebar nav a.active i {
+            color: var(--neon-blue);
+            text-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        .main-content {
+            margin-left: 280px;
+            width: calc(100% - 280px);
+            padding: 50px 60px;
+            position: relative;
+        }
+
+        .page {
+            display: none;
+            animation: scaleUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: scale(0.96) translateY(20px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes scaleUpFade {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .glass-header {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-header img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            opacity: 0.45;
+            mix-blend-mode: luminosity;
+            transition: opacity 0.5s;
+        }
+
+        .glass-header:hover img {
+            opacity: 0.75;
+            mix-blend-mode: normal;
+        }
+
+        .header-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px;
+            background: linear-gradient(to top, #0b0c10 15%, transparent);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #fff, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .section-intro {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--neon-purple);
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #d1d5db;
+            position: relative;
+        }
+
+        .section-intro i.quote-icon {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 2.5rem;
+            color: var(--neon-purple);
+            opacity: 0.3;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: 0.4s ease-out;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(157, 78, 221, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .glass-card h3 i {
+            color: var(--neon-blue);
+            margin-right: 15px;
+            font-size: 1.9rem;
+            filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.4));
+        }
+
+        .glass-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .ejemplo-box {
+            background: linear-gradient(90deg, rgba(0, 243, 255, 0.08) 0%, rgba(0, 0, 0, 0.2) 100%);
+            border-left: 3px solid var(--neon-blue);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            font-size: 0.95rem;
+            color: #d1d5db;
+            margin-top: auto;
+            position: relative;
+        }
+
+        .ejemplo-box strong {
+            color: var(--neon-blue);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--glass-border);
+                z-index: 1000;
+            }
+
+            .sidebar nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sidebar nav a i {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 30px 20px;
+            }
+
+            .glass-header img {
+                height: 200px;
+            }
+
+            .text-gradient {
+                font-size: 2.2rem;
+            }
+
+            .section-intro {
+                font-size: 1rem;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <aside class="sidebar">
+        <div class="logo-container">
+            <i class="fa-solid fa-microchip"></i>
+            <h2>Ciudadanía<br>Digital</h2>
+        </div>
+        <nav>
+            <a onclick="showPage('inicio')" id="nav-inicio" class="active"><i class="fa-solid fa-rocket"></i> Inicio</a>
+            <a onclick="showPage('info')" id="nav-info"><i class="fa-solid fa-network-wired"></i> Información</a>
+            <a onclick="showPage('economia')" id="nav-economia"><i class="fa-solid fa-coins"></i> Economía</a>
+            <a onclick="showPage('derechos')" id="nav-derechos"><i class="fa-solid fa-fingerprint"></i> Seguridad</a>
+            <a onclick="showPage('reflexion')" id="nav-reflexion"><i class="fa-solid fa-bolt"></i> Reflexión</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <section id="inicio" class="page active">
+            <div class="glass-header">
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
+                    alt="Planeta conectado moderno">
+                <div class="header-content">
+                    <h1 class="text-gradient">Apropiación Digital Profunda</h1>
+                    <p style="color: #fff; font-size: 1.25rem; max-width: 750px; line-height: 1.6;">Transitando de
+                        consumidores pasivos a constructores activos de la sociedad interconectada.</p>
+                </div>
+            </div>
+
+            <div class="section-intro">
+                <i class="fa-solid fa-quote-left quote-icon"></i>
+                <p style="margin-top: 10px;">Bienvenido a este micrositio estructurado. La ciudadanía digital en el
+                    siglo XXI ya no se limita a saber encender un dispositivo o navegar por redes sociales; implica una
+                    comprensión holística y profunda de cómo las Tecnologías de la Información y la Comunicación (TIC)
+                    permean de forma irreversible nuestras dinámicas sociales, políticas y económicas.</p>
+                <br>
+                <p>En un mundo hiperconectado, donde la inteligencia artificial y los algoritmos moldean nuestra
+                    percepción de la realidad, asumir un rol proactivo es fundamental para no quedar rezagados. A través
+                    de este recorrido, analizaremos conceptos clave de la apropiación digital con una mirada altamente
+                    crítica y contextualizada, preparándonos para los retos del futuro.</p>
+            </div>
+
+            <div class="glass-card"
+                style="max-width: 600px; margin: 0 auto; text-align: center; border-color: rgba(157, 78, 221, 0.3);">
+                <div class="avatar-circle"
+                    style="width: 100px; height: 100px; background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0,243,255,0.2);">
+                    <i class="fa-solid fa-user-astronaut" style="font-size: 3rem; color: #fff;"></i>
+                </div>
+                <h3><i class="fa-solid fa-id-badge"></i> Stiven David Ortiz Calderon</h3>
+                <p style="font-size: 1.2rem; color: var(--neon-blue); margin-bottom: 5px;">Estudiante de Ingeniería de
+                    Sistemas</p>
+                <p style="font-size: 1rem; color: var(--text-muted);">Universidad ECCI</p>
+                <p style="font-size: 1rem; color: var(--text-muted);">OFHP - Ciudadanía Digital</p>
+                <div
+                    style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--glass-border); font-style: italic; font-size: 0.95rem; color: var(--text-muted);">
+                    "Análisis de la sociedad de la información y ecosistemas digitales desde una perspectiva de
+                    Aprendizaje Basado en Problemas."
+                </div>
+            </div>
+        </section>
+
+        <section id="info" class="page">
+            <div class="glass-header">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80"
+                    alt="Flujo de datos abstractos">
+                <div class="header-content">
+                    <h1 class="text-gradient">1. Información y Comunicación</h1>
+                </div>
+            </div>
+
+            <div class="section-intro">
+                Vivimos en la era de la sobreinformación o "infoxicación". Procesar este inmenso volumen de datos
+                requiere habilidades cognitivas y técnicas específicas para no ser víctimas de la manipulación
+                algorítmica ni de las burbujas de filtro. Aquí convergen tres pilares fundamentales que todo ingeniero y
+                profesional debe dominar: el saber buscar (alfabetismo), el saber transmitir eficazmente (comunicación)
+                y el saber convivir en sociedad (netiqueta).
+            </div>
+
+            <div class="content-grid">
+                <div class="glass-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80"
+                        alt="Análisis de datos gráficos" class="card-img">
+                    <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Alfabetismo Digital</h3>
+                    <p>Es la competencia analítica que nos permite localizar, evaluar, sintetizar y crear información de
+                        forma crítica. Va mucho más allá de saber usar un motor de búsqueda; implica comprender los
+                        sesgos de confirmación, verificar la autoría de las fuentes, y desarrollar un pensamiento que
+                        nos permita identificar contenido sintético o generado por IA diseñado para desinformar.</p>
+                    <div class="ejemplo-box">
+                        <strong>Aplicación Práctica</strong>
+                        En lugar de utilizar el primer resultado de búsqueda o información generativa sin verificar, se
+                        acude a repositorios indexados y académicos (como Google Scholar o Redalyc) cruzando datos y
+                        aplicando "fact-checking" para evitar la propagación de desinformación masiva (Fake News).
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=600&q=80"
+                        alt="Reunión virtual moderna" class="card-img">
+                    <h3><i class="fa-solid fa-people-arrows"></i> Comunicación</h3>
+                    <p>Es la habilidad de intercambiar ideas, colaborar en tiempo real y construir redes valiosas
+                        mediante herramientas tecnológicas. Involucra la adaptación del mensaje dependiendo del canal
+                        (sincrónico o asincrónico). En la actual era del trabajo híbrido, dominar estas plataformas
+                        garantiza la eficiencia operativa y fomenta un tejido profesional fuerte a distancia.</p>
+                    <div class="ejemplo-box">
+                        <strong>Aplicación Práctica</strong>
+                        La gestión ágil de proyectos mediante plataformas de trabajo en equipo como Slack, Trello o
+                        Jira, donde los desarrolladores documentan procesos y dependencias para colaborar con colegas en
+                        diferentes husos horarios, optimizando la productividad y reduciendo la fricción comunicativa.
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
+                        alt="Escribiendo correo profesional" class="card-img">
+                    <h3><i class="fa-regular fa-face-smile-beam"></i> Netiqueta</h3>
+                    <p>Es el código de conducta cívica y cortesía aplicado al ciberespacio. La empatía digital es vital
+                        para evitar malentendidos, ya que la ausencia de lenguaje corporal y tono de voz puede hacer que
+                        los mensajes escritos se interpreten de forma pasivo-agresiva. También abarca el respeto por la
+                        diversidad de opiniones y la consciencia sobre cómo nuestras palabras afectan a otros.</p>
+                    <div class="ejemplo-box">
+                        <strong>Aplicación Práctica</strong>
+                        Respetar el "Derecho a la Desconexión" de los colegas programando el envío de correos fuera del
+                        horario laboral. Asimismo, implica abstenerse de usar lenguaje agresivo, evitar escribir en
+                        MAYÚSCULAS SOSTENIDAS (que equivale a gritar) y rechazar dinámicas tóxicas como la cibercultura
+                        de la cancelación.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="economia" class="page">
+            <div class="glass-header">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80"
+                    alt="Economía digital futurista">
+                <div class="header-content">
+                    <h1 class="text-gradient">2. Procesos Económicos</h1>
+                </div>
+            </div>
+
+            <div class="section-intro">
+                La transformación digital ha desmantelado de forma definitiva las barreras geográficas del comercio
+                tradicional y ha transformado nuestra relación con la propiedad de los bienes. Hoy en día, el acceso es
+                más importante que la posesión, dando lugar a modelos económicos disruptivos, altamente escalables y que
+                obligan a las legislaciones globales a adaptarse a un ritmo sin precedentes.
+            </div>
+
+            <div class="content-grid">
+                <div class="glass-card">
+                    <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=600&q=80"
+                        alt="Espacio de coworking moderno" class="card-img">
+                    <h3><i class="fa-solid fa-handshake"></i> Economía Colaborativa</h3>
+                    <p>Un modelo socioeconómico apoyado en la tecnología, basado en compartir, alquilar o intercambiar
+                        bienes a través de plataformas digitales descentralizadas que conectan la oferta y la demanda
+                        directamente. Democratiza el acceso a recursos que antes requerían grandes capitales, optimiza
+                        activos inactivos, promueve la sostenibilidad ambiental y reduce la huella de carbono.</p>
+                    <div class="ejemplo-box">
+                        <strong>Ejemplo Práctico 1</strong>
+                        Un profesional de ingeniería que ofrece sus servicios de desarrollo como "freelancer" en
+                        plataformas globales como Upwork o Fiverr, monetizando sus habilidades en monedas fuertes
+                        directamente con clientes internacionales.<br><br>
+                        <strong>Ejemplo Práctico 2</strong>
+                        El uso de aplicaciones de movilidad compartida (como Uber o BlaBlaCar) o de alojamiento (como
+                        Airbnb), donde ciudadanos optimizan el uso de sus vehículos o inmuebles vacíos basándose en un
+                        sistema de confianza y reseñas mutuas (peer-to-peer).
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=600&q=80"
+                        alt="Pago digital seguro" class="card-img">
+                    <h3><i class="fa-solid fa-cart-shopping"></i> Comercio Electrónico</h3>
+                    <p>La integración total del ciclo de ventas (desde la captación hasta el servicio post-venta)
+                        mediante redes telemáticas. El e-commerce contemporáneo requiere infraestructuras altamente
+                        seguras, logística de última milla eficiente, pasarelas de pago cifradas y marcos legales
+                        internacionales que garanticen la protección al consumidor y el correcto manejo de sus datos
+                        financieros.</p>
+                    <div class="ejemplo-box">
+                        <strong>Ejemplo Práctico 1</strong>
+                        La adopción masiva de billeteras digitales y pagos por códigos QR por parte de microempresarios,
+                        permitiéndoles formalizar sus transacciones diarias y automatizar su embudo de ventas en redes
+                        sociales las 24 horas del día.<br><br>
+                        <strong>Ejemplo Práctico 2</strong>
+                        La transición masiva hacia la adquisición de licencias en la nube (modelo Software as a Service
+                        - SaaS), como servidores web o herramientas de diseño, impulsando una economía basada puramente
+                        en servicios sin necesidad de manufactura de productos físicos.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="derechos" class="page">
+            <div class="glass-header">
+                <img src="https://images.unsplash.com/photo-1563206767-5b18f218e8de?auto=format&fit=crop&w=1200&q=80"
+                    alt="Seguridad digital candado">
+                <div class="header-content">
+                    <h1 class="text-gradient">3. Derechos y Seguridad</h1>
+                </div>
+            </div>
+
+            <div class="section-intro">
+                Nuestra existencia digital genera constantemente metadatos y deja un rastro casi inborrable. A medida
+                que compartimos y centralizamos más aspectos de nuestra vida (salud, finanzas, educación) en la nube, la
+                necesidad de ejercer activamente nuestros derechos cibernéticos y aplicar protocolos de seguridad
+                estrictos deja de ser una opción técnica para convertirse en una verdadera cuestión de supervivencia
+                frente a ciberdelitos y usurpación de identidad.
+            </div>
+
+            <div class="content-grid">
+                <div class="glass-card">
+                    <img src="https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=600"
+                        alt="Candado en laptop" class="card-img">
+                    <h3><i class="fa-solid fa-user-shield"></i> Protección de Datos</h3>
+                    <p>Es la garantía constitucional que tenemos los ciudadanos para conocer, actualizar y rectificar la
+                        información que instituciones públicas o privadas recopilan sobre nosotros (Habeas Data). En un
+                        panorama donde nuestro comportamiento es constantemente perfilado y monetizado por grandes
+                        corporaciones tecnológicas (Big Data), es nuestro derecho mantener la soberanía absoluta sobre
+                        nuestra privacidad y exigir transparencia.</p>
+                    <div class="ejemplo-box">
+                        <strong>Práctica de Protección</strong>
+                        Revisar de forma consciente los términos, condiciones y políticas de cookies de las apps que
+                        descargamos. Implica denegar accesos invasivos e innecesarios (como dar permisos de cámara a una
+                        app de notas) y ejercer el derecho formal a exigir la eliminación de nuestros datos de bases de
+                        marketing de terceros.
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <img src="https://images.pexels.com/photos/5380642/pexels-photo-5380642.jpeg?auto=compress&cs=tinysrgb&w=600"
+                        alt="Seguridad en redes informáticas" class="card-img">
+                    <h3><i class="fa-solid fa-lock"></i> Deberes y Seguridad</h3>
+                    <p>La seguridad en línea no es solo un blindaje técnico, es un pilar ético. Implica proteger nuestra
+                        infraestructura personal y corporativa mediante herramientas modernas, pero también significa
+                        cumplir fielmente con nuestros deberes ciudadanos: no vulnerar sistemas ajenos, respetar
+                        rigurosamente la propiedad intelectual y el licenciamiento de software, y ser un muro de
+                        contención denunciando activamente el cibercrimen.</p>
+                    <div class="ejemplo-box">
+                        <strong>Práctica de Protección</strong>
+                        Implementar sin excepción la Autenticación Multifactor (MFA/2FA) en todos los correos y cuentas
+                        bancarias, utilizar bóvedas y gestores de contraseñas seguras, y educar a nuestro círculo
+                        cercano para identificar ataques de ingeniería social como el Phishing o el Smishing.
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <img src="https://images.pexels.com/photos/207580/pexels-photo-207580.jpeg?auto=compress&cs=tinysrgb&w=600"
+                        alt="Servidores y rastro de datos" class="card-img">
+                    <h3><i class="fa-solid fa-eraser"></i> Derecho al Olvido</h3>
+                    <p>Involucra la gestión proactiva y responsable de nuestra identidad y reputación digital. Tenemos
+                        el legítimo derecho a solicitar que los motores de búsqueda y las bases de datos eliminen
+                        información personal obsoleta, irrelevante o difamatoria que afecte nuestra imagen. Esto
+                        garantiza que nuestro pasado documentado no limite injustamente nuestras oportunidades laborales
+                        o sociales del futuro.</p>
+                    <div class="ejemplo-box">
+                        <strong>Práctica de Protección</strong>
+                        Realizar periódicamente un escrutinio personal o "egosurfing" (buscar nuestro propio nombre
+                        exacto en internet y redes) para auditar qué información pública existe sobre nosotros,
+                        configurando los perfiles en modo privado y solicitando legalmente la baja de perfiles antiguos
+                        o filtraciones de fotos no consentidas.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reflexion" class="page">
+            <div class="glass-header">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
+                    alt="Reflexión y pensamiento">
+                <div class="header-content">
+                    <h1 class="text-gradient">Reflexión Personal</h1>
+                </div>
+            </div>
+
+            <div class="glass-card" style="width: 100%;">
+                <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1000&q=80"
+                    alt="Escritorio de estudio moderno" class="card-img" style="height: 350px;">
+
+                <h3><i class="fa-solid fa-brain"></i> Análisis Crítico de la Apropiación Digital</h3>
+
+                <p style="font-size: 1.15rem; line-height: 1.8;">Esta actividad ha transformado por completo mi
+                    perspectiva tecnológica: he comprendido que la verdadera apropiación digital no consiste simplemente
+                    en consumir pasivamente el software de moda, sino en desarrollar la capacidad crítica y técnica para
+                    utilizar estas herramientas en pro de mi formación como ingeniero y ciudadano. En mi día a día,
+                    aplico el alfabetismo digital cuestionando sistemáticamente la veracidad y el origen de la
+                    información, lo que me empodera para tomar decisiones basadas en hechos comprobables y blindarme
+                    contra la manipulación algorítmica.</p>
+
+                <p style="font-size: 1.15rem; line-height: 1.8;">A nivel económico y de seguridad, mi participación en
+                    entornos digitales me ha dejado claro que gestionar contraseñas robustas o cuidar mis datos
+                    personales (Habeas Data) no es un trámite molesto, sino el ejercicio activo de mis derechos en un
+                    mundo hiperconectado. Finalmente, asumo con total seriedad la responsabilidad ética sobre mi huella
+                    digital, comprometiéndome a aplicar la netiqueta para aportar valor real, fomentar la colaboración y
+                    respetar la integridad de la comunidad global en cada interacción que realice en la red.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            const targetPage = document.getElementById(pageId);
+            targetPage.style.animation = 'none';
+            targetPage.offsetHeight;
+            targetPage.style.animation = null;
+            targetPage.classList.add('active');
+
+            const links = document.querySelectorAll('.sidebar nav a');
+            links.forEach(link => link.classList.remove('active'));
+            document.getElementById('nav-' + pageId).classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

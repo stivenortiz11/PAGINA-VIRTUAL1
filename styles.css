@@ -214,3 +214,35 @@ body{font-family:var(--body);background:#000;color:#fff;overflow:hidden}
   .counter,.brand{font-size:.72rem}
   .theme-toggle{right:78px}
 }
+
+/* ============ IMÁGENES ============ */
+/* logo Bancolombia en portada */
+.logo{display:flex;align-items:center;gap:.6rem;margin-bottom:1.3rem}
+.logo span{font-family:var(--head);font-weight:800;font-size:1.3rem;color:#fff;letter-spacing:.01em}
+
+/* foto de fondo en diapositivas oscuras */
+.has-photo::after{content:"";position:absolute;inset:0;z-index:-1;background-image:var(--photo);
+  background-size:cover;background-position:center;opacity:.16;mix-blend-mode:luminosity}
+.has-photo::before{background:
+  radial-gradient(900px 600px at 15% 110%, rgba(242,140,30,.14), transparent 60%),
+  radial-gradient(1000px 700px at 85% -10%, rgba(123,79,181,.30), transparent 55%),
+  linear-gradient(180deg, rgba(18,13,28,.72), rgba(18,13,28,.88)) !important}
+/* variante: foto fuerte a un lado (divisorias) */
+.photo--side::after{opacity:.5;mix-blend-mode:normal;
+  -webkit-mask-image:linear-gradient(90deg,transparent 48%,#000 100%);
+  mask-image:linear-gradient(90deg,transparent 48%,#000 100%)}
+
+/* tira de fotos del contexto */
+.photostrip{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.4rem}
+.photostrip figure{position:relative;border-radius:.9rem;overflow:hidden;box-shadow:0 12px 28px rgba(0,0,0,.14);cursor:pointer}
+.photostrip img{width:100%;height:9.5rem;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.photostrip figcaption{position:absolute;left:0;right:0;bottom:0;padding:.9rem .8rem .55rem;font-size:.8rem;font-weight:600;color:#fff;
+  background:linear-gradient(0deg,rgba(0,0,0,.72),transparent)}
+.photostrip figure:hover img{transform:scale(1.08)}
+
+@media(max-width:900px){
+  .photostrip{grid-template-columns:1fr 1fr}
+  .photostrip img{height:8rem}
+  .photo--side::after{opacity:.22}
+}
+@media(max-width:560px){.photostrip{grid-template-columns:1fr}}

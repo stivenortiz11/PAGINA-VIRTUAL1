@@ -11,9 +11,20 @@
 </head>
 <body>
 
+  <!-- Pantalla de carga -->
+  <div class="loader" id="loader">
+    <div class="loader__ring"></div>
+    <p class="loader__txt">Cargando presentación…</p>
+  </div>
+
+  <!-- Fondo de partículas -->
+  <canvas id="fx"></canvas>
+
+  <!-- HUD -->
   <div class="progress-bar"><span id="progress"></span></div>
-  <div class="counter"><span id="current">1</span> / <span id="total">15</span></div>
+  <div class="counter"><span id="current">1</span> / <span id="total">17</span></div>
   <div class="brand">Bancolombia · Actividad 3</div>
+  <button class="theme-toggle" id="theme" title="Cambiar tema claro/oscuro">◐</button>
 
   <main id="deck">
 
@@ -32,6 +43,7 @@
         </div>
         <button class="btn-start anim" data-goto="1">Comenzar <span>▸</span></button>
       </div>
+      <div class="scroll-hint anim">Desliza, usa ← → o haz clic</div>
     </section>
 
     <!-- 2 MENÚ -->
@@ -43,15 +55,15 @@
           <span class="cat__num">01</span><span class="cat__name">Contexto y perfil</span>
           <span class="cat__desc">La empresa, el cargo y de dónde parte el plan</span><span class="cat__go">Ver ▸</span>
         </button>
-        <button class="cat" data-goto="4" style="--c:#F28C1E">
+        <button class="cat" data-goto="5" style="--c:#F28C1E">
           <span class="cat__num">02</span><span class="cat__name">Modelo de talento</span>
           <span class="cat__desc">El enfoque que usa Bancolombia</span><span class="cat__go">Ver ▸</span>
         </button>
-        <button class="cat" data-goto="6" style="--c:#2BB3A3">
+        <button class="cat" data-goto="7" style="--c:#2BB3A3">
           <span class="cat__num">03</span><span class="cat__name">Plan de retención</span>
           <span class="cat__desc">Que el talento clave quiera quedarse</span><span class="cat__go">Ver ▸</span>
         </button>
-        <button class="cat" data-goto="12" style="--c:#E0457B">
+        <button class="cat" data-goto="13" style="--c:#E0457B">
           <span class="cat__num">04</span><span class="cat__name">Evaluación</span>
           <span class="cat__desc">Cómo medir el desempeño</span><span class="cat__go">Ver ▸</span>
         </button>
@@ -74,14 +86,31 @@
           <ul class="ticks">
             <li>Trabaja en los productos digitales del banco</li>
             <li>Lidera a dos personas a su cargo</li>
-            <li>Candidata elegida: Marta Castro (más de 10 años de experiencia)</li>
-            <li>Clave: capacidad técnica + liderazgo + aprendizaje continuo</li>
+            <li>Candidata elegida: Marta Castro</li>
           </ul>
+          <div class="bars">
+            <div class="bar"><span>Experiencia técnica</span><div class="bar__track"><i data-fill="95" style="--c:#5B2A86"></i></div></div>
+            <div class="bar"><span>Liderazgo</span><div class="bar__track"><i data-fill="85" style="--c:#F28C1E"></i></div></div>
+            <div class="bar"><span>Aprendizaje continuo</span><div class="bar__track"><i data-fill="90" style="--c:#2BB3A3"></i></div></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 4 DIVISORIA MODELO -->
+    <!-- 4 CIFRAS CLAVE (contadores) -->
+    <section class="slide slide--dark">
+      <span class="kicker kicker--orange anim">Por qué Marta Castro</span>
+      <h2 class="title anim">Cifras que respaldan la decisión</h2>
+      <p class="lead lead--light anim">Logros medibles de la candidata seleccionada, tomados de su hoja de vida (Corte 2).</p>
+      <div class="stats stagger">
+        <div class="stat"><span class="stat__n" data-count="10" data-suffix="+">0</span><span class="stat__l">años de experiencia</span></div>
+        <div class="stat"><span class="stat__n" data-count="25" data-suffix="%">0</span><span class="stat__l">aumento en ingresos</span></div>
+        <div class="stat"><span class="stat__n" data-count="20" data-suffix="%">0</span><span class="stat__l">más satisfacción del cliente</span></div>
+        <div class="stat"><span class="stat__n" data-count="10" data-suffix="">0</span><span class="stat__l">personas lideradas</span></div>
+      </div>
+    </section>
+
+    <!-- 5 DIVISORIA MODELO -->
     <section class="slide slide--dark">
       <div class="divider">
         <span class="divider__num anim pop">02</span>
@@ -90,7 +119,7 @@
       </div>
     </section>
 
-    <!-- 5 MODELO CICLO -->
+    <!-- 6 MODELO CICLO -->
     <section class="slide slide--light">
       <span class="kicker kicker--orange anim">Punto 4 de la actividad</span>
       <h2 class="title title--dark anim">Modelo basado en el ciclo del empleado</h2>
@@ -105,7 +134,7 @@
       </div>
     </section>
 
-    <!-- 6 DIVISORIA RETENCIÓN -->
+    <!-- 7 DIVISORIA RETENCIÓN -->
     <section class="slide slide--dark">
       <div class="divider">
         <span class="divider__num anim pop">03</span>
@@ -114,20 +143,21 @@
       </div>
     </section>
 
-    <!-- 7 RETENCIÓN RESUMEN -->
+    <!-- 8 RETENCIÓN RESUMEN -->
     <section class="slide slide--light">
       <span class="kicker kicker--teal anim">Punto 2 de la actividad</span>
       <h2 class="title title--dark anim">Cinco palancas de retención</h2>
+      <p class="lead anim">Haz clic en cualquier palanca para ver su detalle.</p>
       <div class="levers stagger">
-        <button class="lever" data-goto="7" style="--c:#5B2A86"><b>Motivación y compromiso</b><em>Propósito, autonomía y aporte visible</em></button>
-        <button class="lever" data-goto="8" style="--c:#F28C1E"><b>Desarrollo y carrera</b><em>Crecimiento, sucesión y liderazgo</em></button>
-        <button class="lever" data-goto="9" style="--c:#2BB3A3"><b>Reconocimiento y recompensas</b><em>Compensación, bonos y reconocimiento</em></button>
-        <button class="lever" data-goto="10" style="--c:#7A4FB5"><b>Flexibilidad laboral</b><em>Híbrido real y equilibrio de vida</em></button>
-        <button class="lever" data-goto="11" style="--c:#E0457B"><b>Retroalimentación</b><em>Escuchar y actuar de forma continua</em></button>
+        <button class="lever" data-goto="8" style="--c:#5B2A86"><span class="lever__i">◆</span><b>Motivación y compromiso</b><em>Propósito, autonomía y aporte visible</em></button>
+        <button class="lever" data-goto="9" style="--c:#F28C1E"><span class="lever__i">▲</span><b>Desarrollo y carrera</b><em>Crecimiento, sucesión y liderazgo</em></button>
+        <button class="lever" data-goto="10" style="--c:#2BB3A3"><span class="lever__i">★</span><b>Reconocimiento y recompensas</b><em>Compensación, bonos y reconocimiento</em></button>
+        <button class="lever" data-goto="11" style="--c:#7A4FB5"><span class="lever__i">⬡</span><b>Flexibilidad laboral</b><em>Híbrido real y equilibrio de vida</em></button>
+        <button class="lever" data-goto="12" style="--c:#E0457B"><span class="lever__i">●</span><b>Retroalimentación</b><em>Escuchar y actuar de forma continua</em></button>
       </div>
     </section>
 
-    <!-- 8 DETALLE 1 -->
+    <!-- 9 DETALLE 1 -->
     <section class="slide slide--light">
       <span class="kicker kicker--purple anim">Retención · Frente 1</span>
       <h2 class="title title--dark anim">Motivación y compromiso</h2>
@@ -142,7 +172,7 @@
       </div>
     </section>
 
-    <!-- 9 DETALLE 2 -->
+    <!-- 10 DETALLE 2 -->
     <section class="slide slide--light">
       <span class="kicker kicker--orange anim">Retención · Frente 2</span>
       <h2 class="title title--dark anim">Desarrollo profesional y carrera</h2>
@@ -157,7 +187,7 @@
       </div>
     </section>
 
-    <!-- 10 DETALLE 3 -->
+    <!-- 11 DETALLE 3 -->
     <section class="slide slide--light">
       <span class="kicker kicker--teal anim">Retención · Frente 3</span>
       <h2 class="title title--dark anim">Reconocimiento y recompensas</h2>
@@ -172,7 +202,7 @@
       </div>
     </section>
 
-    <!-- 11 DETALLE 4 -->
+    <!-- 12 DETALLE 4 -->
     <section class="slide slide--light">
       <span class="kicker kicker--purple anim">Retención · Frente 4</span>
       <h2 class="title title--dark anim">Políticas de flexibilidad laboral</h2>
@@ -187,7 +217,7 @@
       </div>
     </section>
 
-    <!-- 12 DETALLE 5 -->
+    <!-- 13 DETALLE 5 -->
     <section class="slide slide--light">
       <span class="kicker anim" style="color:#E0457B">Retención · Frente 5</span>
       <h2 class="title title--dark anim">Mecanismos de retroalimentación</h2>
@@ -202,7 +232,7 @@
       </div>
     </section>
 
-    <!-- 13 EVALUACIÓN -->
+    <!-- 14 EVALUACIÓN -->
     <section class="slide slide--light">
       <span class="kicker kicker--orange anim">Punto 3 de la actividad</span>
       <h2 class="title title--dark anim">Cómo evaluamos la productividad</h2>
@@ -216,7 +246,21 @@
       </div>
     </section>
 
-    <!-- 14 CONCLUSIÓN -->
+    <!-- 15 CRONOGRAMA (timeline) -->
+    <section class="slide slide--light">
+      <span class="kicker kicker--purple anim">Complemento · Plan de capacitación</span>
+      <h2 class="title title--dark anim">Cronograma de los primeros 6 meses</h2>
+      <div class="timeline stagger">
+        <div class="tl" style="--c:#5B2A86"><span class="tl__dot"></span><b>Semana 1-2</b><em>Bienvenida, cultura y código de ética. Mentor asignado.</em></div>
+        <div class="tl" style="--c:#F28C1E"><span class="tl__dot"></span><b>Semana 3-4</b><em>Seguridad de la información y protección de datos.</em></div>
+        <div class="tl" style="--c:#2BB3A3"><span class="tl__dot"></span><b>Mes 2</b><em>Herramientas de desarrollo y estándares internos.</em></div>
+        <div class="tl" style="--c:#7A4FB5"><span class="tl__dot"></span><b>Mes 3</b><em>Aprendizaje en el puesto con acompañamiento.</em></div>
+        <div class="tl" style="--c:#E0457B"><span class="tl__dot"></span><b>Mes 4</b><em>Módulo de liderazgo y gestión de equipos.</em></div>
+        <div class="tl" style="--c:#C98A1B"><span class="tl__dot"></span><b>Mes 5-6</b><em>Trabajo autónomo con evaluación de desempeño.</em></div>
+      </div>
+    </section>
+
+    <!-- 16 CONCLUSIÓN -->
     <section class="slide slide--dark">
       <span class="kicker kicker--orange anim">En resumen</span>
       <h2 class="title anim">Del dicho al hecho</h2>
@@ -226,9 +270,10 @@
         <div class="take__c" style="--c:#2BB3A3"><b>Evaluación</b><em>Métodos claros, frecuencia definida y retroalimentación útil</em></div>
         <div class="take__c" style="--c:#7A4FB5"><b>Modelo</b><em>El ciclo del empleado como hilo conductor de toda la gestión</em></div>
       </div>
+      <button class="btn-start anim" data-goto="0" style="margin-top:1.8rem">↺ Volver al inicio</button>
     </section>
 
-    <!-- 15 REFERENCIAS -->
+    <!-- 17 REFERENCIAS -->
     <section class="slide slide--light">
       <span class="kicker kicker--purple anim">Normas APA 7</span>
       <h2 class="title title--dark anim">Referencias</h2>
@@ -248,7 +293,7 @@
   <button class="nav nav--next" id="next" aria-label="Siguiente">›</button>
 
   <div class="dots" id="dots"></div>
-  <div class="help">← → navegar · F pantalla completa</div>
+  <div class="help">← → navegar · F pantalla · M menú</div>
 
   <script src="script.js"></script>
 </body>
